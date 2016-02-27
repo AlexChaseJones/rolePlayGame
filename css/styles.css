@@ -80,7 +80,7 @@ body, html {
 	background-color: none;
 	top: 117px;
 	left: 170px;
-	transition: background-color 1s;
+	transition: background-color .7s;
 }
 
 #player:hover {
@@ -93,13 +93,48 @@ body, html {
 }
 
 .enemy {
-	border-color: rgba(155,0,0,.6);
+	border-color: rgba(255,100,0,.6);
 	background-color: none;
+	transition: .7s;
+}
+
+.enemy:hover {
+	background-color: rgba(255,100,0,.6);
 }
 
 .enemy .headBar {
-	background-color: rgba(155,0,0,.6);
+	background-color: rgba(255,100,0,.6);
 	padding: 5px 15px;
+}
+
+.defender {
+	border-color: rgba(155,0,0,.6);
+	background-color: none;
+	overflow: visible;
+	transition: .7s;
+}
+
+.defender:hover {
+	background-color: rgba(155,0,0,.6);
+}
+
+.defender .headBar {
+	background-color: rgba(155,0,0,.6);
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
+	padding: 5px 15px;
+}
+
+.attack-button {
+	position: absolute;
+	font-size: 1em;
+	bottom:0px;
+	left:0px;
+	border-radius: 20px;
+	padding:5px 10px;
+	color: white;
+	border: none;
+	background-color: rgba(155,10,0,.9);
 }
 
 #num0 {

@@ -53,55 +53,34 @@
 		counter: 35, 
 	};
 
-	var choiceView = function(){
+
+	var charArray = [starfox, mario, link, donkeyKong];
+
+	for (var i = 0; i < charArray.length; i++) {
+		var choiceView = function(){
 		return "<h1>" + this.name + "</h1><img src='" + this.picture + "' /><h2>Health Points: <br/>" + this.health + "</h2><h3>Base Attack: " + this.baseAttack + "</h3>"
-	};
+		};
+		charArray[i].choiceCode = choiceView;
 
-	starfox.choiceCode = choiceView;
-	mario.choiceCode = choiceView;
-	link.choiceCode = choiceView;
-	donkeyKong.choiceCode = choiceView;
-
-	var battleView = function(){
+		var battleView = function(){
 		return "<div class='headBar'><h1>" + this.name + "</h1><h2>" + this.health + "HP</h2><div class='clearfix'></div></div><img src='" + this.picture + "' />" 
-	};
+		};	
+		charArray[i].battleCode = battleView;
 
-	starfox.battleCode = battleView;
-	mario.battleCode = battleView;
-	link.battleCode = battleView;
-	donkeyKong.battleCode = battleView;
+		var newDiv = $('<div>');
+		$(newDiv).addClass("characterBlock");
+		$(newDiv).html(charArray[i].choiceCode());
+		$(newDiv).attr('data-index', charArray[i].indexNum);
+		$('#characters').append(newDiv);
+	}
+
 	//Global
 	var player = undefined;
-	// var enemies = //ARRAY THAT HOLDS ALL OTHER ENEMIES
+	var defender = undefined;
 	// var defender = //code THAT HOLDS THE CURRENT BATTLING ENEMY
 	
-		// Character Builds for choice Menu
-	var starfoxDiv = $('<div>');
-	$(starfoxDiv).addClass("characterBlock");
-	$(starfoxDiv).html(starfox.choiceCode());
-	$(starfoxDiv).attr('data-index', starfox.indexNum)
 
-	var marioDiv = $('<div>');
-	$(marioDiv).addClass("characterBlock");
-	$(marioDiv).html(mario.choiceCode());
-	$(marioDiv).attr('data-index', mario.indexNum)
-
-	var linkDiv = $('<div>');
-	$(linkDiv).addClass("characterBlock");
-	$(linkDiv).html(link.choiceCode());
-	$(linkDiv).attr('data-index', link.indexNum)
-
-	var donkeyKongDiv = $('<div>');
-	$(donkeyKongDiv).addClass("characterBlock");
-	$(donkeyKongDiv).html(donkeyKong.choiceCode());
-	$(donkeyKongDiv).attr('data-index', donkeyKong.indexNum)
-
-	var charArray = [starfox, mario, link, donkeyKong]
-		// Initial environment code. Adds characters to choice menu.
-	$('#characters').append(starfoxDiv);
-	$('#characters').append(marioDiv);
-	$('#characters').append(linkDiv);
-	$('#characters').append(donkeyKongDiv);
+		
 
 	$('.characterBlock').on('click', function(){
 		var index = $(this).data('index');
@@ -116,14 +95,45 @@
 		for (var i = 0; i < charArray.length; i++) {
 			charArray[i].indexNum = i;				//updates indexNum key to correspond to charArray index
 			
-			var enemyDiv = $('<div class="character enemy">');	//Creates a new enemy div for each enemy
+			var enemyDiv = $('<div class="character active enemy">');	//Creates a new enemy div for each enemy
 			$(enemyDiv).attr('id', 'num' + charArray[i].indexNum);	//Gives each enemyDiv a unique id so that they can be placed accurately
-			$(enemyDiv).html(charArray[i].battleCode())		//Adds corresponding enemy code to div
-			$('#environment').append(enemyDiv);
+			$(enemyDiv).attr('data-index', charArray[i].indexNum);
+			$(enemyDiv).html(charArray[i].battleCode());		//Adds corresponding enemy code to div
+			$('#enemyEnvironment').append(enemyDiv);
 		}
-
+		
+		active();
 	});
 
+function isDead(){
+	if (defender.health < 0) {
+		return true;
+	} 
+	return false;
+};
 
+function active(){ $('.active').on('click', function(){
+			$('#enemyEnvironment').empty()
+			var index = $(this).data('index');
+			defender = charArray[index];
+			var defenderDiv = $('<div class="character defender">');
+			$(defenderDiv).attr('id', 'num'+ index);
+			$(defenderDiv).html(defender.battleCode());
+			var attackButton = $('<button class="attack-button">Attack</button>');
+			$(defenderDiv).append(attackButton);
+			$('#enemyEnvironment').append(defenderDiv);
 
+			$('body .main #enemyEnvironment').on('click', function(){
+				defender.health = defender.health - player.currentAttack;
+				player.attack();
+				$(defenderDiv).html(defender.battleCode());
+				$(defenderDiv).append(attackButton);
+				if (isDead()) {
+					defender.health = 0;
+					$(defenderDiv).html(defender.battleCode());
+					active();
+				}
+			})
+		});
+		}
 // }); commented out for now so that i can access these variables in inspector.
