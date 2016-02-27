@@ -3,66 +3,117 @@
 		// Character objects
 	var starfox = {
 		name: "Star Fox",
-		picture: "../images/starfox.png",
+		indexNum: 0,
+		picture: "images/starfox.png",
 		health: 150,
+		baseAttack: 4,
 		currentAttack: 0,
 		attack: function(){
 			this.currentAttack += 4;
 		},
-		counter: 24
+		counter: 24,
 	};
 
 	var mario = {
 		name: "Mario",
-		picture: "../images/mario.png",
+		indexNum: 1,
+		picture: "images/mario.png",
 		health: 120,
+		baseAttack: 6,
 		currentAttack: 0,
 		attack: function(){
 			this.currentAttack += 6;
 		},
-		counter: 30
+		counter: 30,
 	};
 
 	var link = {
 		name: "Link",
-		picture: "../images/link.png",
+		indexNum: 2,
+		picture: "images/link.png",
 		health: 150,
+		baseAttack: 5,
 		currentAttack: 0,
 		attack: function(){
 			this.currentAttack += 5;
 		},
-		counter: 20
+		counter: 20,
 	};
 
 	var donkeyKong = {
 		name: "Donkey Kong",
-		picture: "../images/donkeykong.png",
+		indexNum: 3,
+		picture: "images/donkeyKong.png",
 		health: 190,
+		baseAttack: 3,	
 		currentAttack: 0,
 		attack: function(){
 			this.currentAttack += 3;
 		},
-		counter: 35,
+		counter: 35, 
 	};
 
+	var choiceView = function(){
+			return "<h1>" + this.name + "</h1><img src='" + this.picture + "' /><h2>Health Points: <br/>" + this.health +"</h2><h3>Base Attack: " + this.baseAttack + "</h3>"
+			};
 
+	starfox.code = choiceView;
+	mario.code = choiceView;
+	link.code = choiceView;
+	donkeyKong.code = choiceView;
 	//Global
-	// var player = //INSERT CODE THAT HAS THE PLAYER CHOOSE A CHARACTER BY CLICKING ON THE ASSOCIATED DIV;
+	var player = undefined;
 	// var enemies = //ARRAY THAT HOLDS ALL OTHER ENEMIES
 	// var defender = //CODE THAT HOLDS THE CURRENT BATTLING ENEMY
+	
+		// Character Builds for choice Menu
+	var starfoxDiv = $('<div>');
+	$(starfoxDiv).addClass("characterBlock");
+	$(starfoxDiv).html(starfox.code());
+	$(starfoxDiv).attr('data-index', starfox.indexNum)
 
-	//Initial environment code
-	function startGame(){
-		if (arguments[0] == 'reset') {
-			//INSERT CODE THAT WILL RESET ALL PARAMETERS OF THE GAME
+	var marioDiv = $('<div>');
+	$(marioDiv).addClass("characterBlock");
+	$(marioDiv).html(mario.code());
+	$(marioDiv).attr('data-index', mario.indexNum)
+
+	var linkDiv = $('<div>');
+	$(linkDiv).addClass("characterBlock");
+	$(linkDiv).html(link.code());
+	$(linkDiv).attr('data-index', link.indexNum)
+
+	var donkeyKongDiv = $('<div>');
+	$(donkeyKongDiv).addClass("characterBlock");
+	$(donkeyKongDiv).html(donkeyKong.code());
+	$(donkeyKongDiv).attr('data-index', donkeyKong.indexNum)
+
+	var charArray = [starfox, mario, link, donkeyKong]
+		// Initial environment code. Adds characters to choice menu.
+	$('#characters').append(starfoxDiv);
+	$('#characters').append(marioDiv);
+	$('#characters').append(linkDiv);
+	$('#characters').append(donkeyKongDiv);
+
+	$('.characterBlock').on('click', function(){
+		var index = $(this).data('index');
+		player = charArray[index];					//the variable player is equal to the OBJECT that corresponds to the div that the user clicked on
+		$('#characters').empty();
+
+		var playerDiv = $('<div id="player">');
+		(playerDiv).html(player.code())
+		$('#environment').append(playerDiv);
+		charArray.splice(index, 1)					//Removes the player character from the OBJECT character array
+
+		for (var i = 0; i < charArray.length; i++) {
+			charArray[i].indexNum = i;				//updates indexNum key to correspond to charArray index
+			
+			var enemyDiv = $('<div class="enemy">');	//Creates a new enemy div for each enemy
+			$(enemyDiv).attr('id', 'num' + charArray[i].indexNum);	//Gives each enemyDiv a unique id so that they can be placed accurately
+			$(enemyDiv).html(charArray[i].code())		//Adds corresponding enemy code to div
+			$('#environment').append(enemyDiv);
 		}
 
-		
-
-
-
-	startGame();
-	}
+	});
 
 
 

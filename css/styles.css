@@ -1,12 +1,32 @@
 body, html {
 	width: 100%;
 	height: 100%;
+	font-family: 'Raleway', sans-serif;
 }
 
+/*-----CHARACTER STYLING-----*/
+.characterBlock {
+	display: inline-block;
+}
+
+.characterBlock h1 {
+	text-align: center;
+	font-size:2em;
+}
+
+.characterBlock img {
+	width: 215px;
+}
+
+.characterBlock h2 {
+
+
+}
 /*-----HEADER SECTION-----*/
 #header {
 	width: 100%;
-	height: 150px;
+	text-align: center;
+
 }
 
 #header > .container {
@@ -20,16 +40,49 @@ body, html {
 	margin:0 auto;
 	min-height: 675px;
 	height: auto;
-	background-image: url('../images/battleArena1000px.png');
+	background-image: url('../images/battlePlatform.png');
 	background-position: left top;
 	background-repeat:no-repeat;
     background-size:1200px 675px;
+    position: relative;
 }
 
 #main {
 	width: 100%;
 }
 
-#environment > .container {
-	
+#environment {
+	color: white;
 }
+
+#environment img {
+	width: 150px;
+}
+
+#player	{
+	border:5px solid black;
+	display: inline-block;
+	position: absolute;
+	top: 135px;
+	left: 280px;
+}
+
+.enemy #num0 {
+
+}
+
+.enemy #num1 {
+
+}
+
+.enemy #num2 {
+
+}
+
+
+
+
+
+
+
+
