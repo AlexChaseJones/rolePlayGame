@@ -51,36 +51,83 @@ body, html {
 	width: 100%;
 }
 
-#environment {
+.character {
 	color: white;
+	display: inline-block;
+	position: absolute;
+	text-align: center;
+	border:5px solid black;
+	border-radius: 25px;
+	overflow: hidden;
 }
 
-#environment img {
-	width: 150px;
+.character h1 {
+	float: left;
+
+}
+
+.character h2 {
+	float: right;
+	margin-left: 10px;
+}
+
+.character img {
+	width: 130px;
 }
 
 #player	{
-	border:5px solid black;
-	display: inline-block;
-	position: absolute;
-	top: 135px;
-	left: 280px;
+	border-color: rgba(0,155,0,.6);
+	background-color: none;
+	top: 117px;
+	left: 170px;
+	transition: background-color 1s;
 }
 
-.enemy #num0 {
-
+#player:hover {
+	background-color: rgba(0,155,0,.6);
 }
 
-.enemy #num1 {
-
+#player .headBar {
+	background-color: rgba(0,155,0,.6);
+	padding: 5px 15px;
 }
 
-.enemy #num2 {
-
+.enemy {
+	border-color: rgba(155,0,0,.6);
+	background-color: none;
 }
 
+.enemy .headBar {
+	background-color: rgba(155,0,0,.6);
+	padding: 5px 15px;
+}
 
+#num0 {
+	top: 117px;
+	left: 900px;	
+}
 
+ #num1 {
+ 	top:330px;
+ 	left: 650px;
+}
+
+#num1 img{
+	width: 90px;
+}
+
+#num2 {
+	top:300px;
+	left: 350px;
+}
+
+#num2 img {
+	width: 165px;
+}
+
+.clearfix {
+	clear: both;
+}
 
 
 

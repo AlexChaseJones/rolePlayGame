@@ -54,37 +54,46 @@
 	};
 
 	var choiceView = function(){
-			return "<h1>" + this.name + "</h1><img src='" + this.picture + "' /><h2>Health Points: <br/>" + this.health +"</h2><h3>Base Attack: " + this.baseAttack + "</h3>"
-			};
+		return "<h1>" + this.name + "</h1><img src='" + this.picture + "' /><h2>Health Points: <br/>" + this.health + "</h2><h3>Base Attack: " + this.baseAttack + "</h3>"
+	};
 
-	starfox.code = choiceView;
-	mario.code = choiceView;
-	link.code = choiceView;
-	donkeyKong.code = choiceView;
+	starfox.choiceCode = choiceView;
+	mario.choiceCode = choiceView;
+	link.choiceCode = choiceView;
+	donkeyKong.choiceCode = choiceView;
+
+	var battleView = function(){
+		return "<div class='headBar'><h1>" + this.name + "</h1><h2>" + this.health + "HP</h2><div class='clearfix'></div></div><img src='" + this.picture + "' />" 
+	};
+
+	starfox.battleCode = battleView;
+	mario.battleCode = battleView;
+	link.battleCode = battleView;
+	donkeyKong.battleCode = battleView;
 	//Global
 	var player = undefined;
 	// var enemies = //ARRAY THAT HOLDS ALL OTHER ENEMIES
-	// var defender = //CODE THAT HOLDS THE CURRENT BATTLING ENEMY
+	// var defender = //code THAT HOLDS THE CURRENT BATTLING ENEMY
 	
 		// Character Builds for choice Menu
 	var starfoxDiv = $('<div>');
 	$(starfoxDiv).addClass("characterBlock");
-	$(starfoxDiv).html(starfox.code());
+	$(starfoxDiv).html(starfox.choiceCode());
 	$(starfoxDiv).attr('data-index', starfox.indexNum)
 
 	var marioDiv = $('<div>');
 	$(marioDiv).addClass("characterBlock");
-	$(marioDiv).html(mario.code());
+	$(marioDiv).html(mario.choiceCode());
 	$(marioDiv).attr('data-index', mario.indexNum)
 
 	var linkDiv = $('<div>');
 	$(linkDiv).addClass("characterBlock");
-	$(linkDiv).html(link.code());
+	$(linkDiv).html(link.choiceCode());
 	$(linkDiv).attr('data-index', link.indexNum)
 
 	var donkeyKongDiv = $('<div>');
 	$(donkeyKongDiv).addClass("characterBlock");
-	$(donkeyKongDiv).html(donkeyKong.code());
+	$(donkeyKongDiv).html(donkeyKong.choiceCode());
 	$(donkeyKongDiv).attr('data-index', donkeyKong.indexNum)
 
 	var charArray = [starfox, mario, link, donkeyKong]
@@ -99,17 +108,17 @@
 		player = charArray[index];					//the variable player is equal to the OBJECT that corresponds to the div that the user clicked on
 		$('#characters').empty();
 
-		var playerDiv = $('<div id="player">');
-		(playerDiv).html(player.code())
+		var playerDiv = $('<div class="character" id="player">');
+		(playerDiv).html(player.battleCode())
 		$('#environment').append(playerDiv);
 		charArray.splice(index, 1)					//Removes the player character from the OBJECT character array
 
 		for (var i = 0; i < charArray.length; i++) {
 			charArray[i].indexNum = i;				//updates indexNum key to correspond to charArray index
 			
-			var enemyDiv = $('<div class="enemy">');	//Creates a new enemy div for each enemy
+			var enemyDiv = $('<div class="character enemy">');	//Creates a new enemy div for each enemy
 			$(enemyDiv).attr('id', 'num' + charArray[i].indexNum);	//Gives each enemyDiv a unique id so that they can be placed accurately
-			$(enemyDiv).html(charArray[i].code())		//Adds corresponding enemy code to div
+			$(enemyDiv).html(charArray[i].battleCode())		//Adds corresponding enemy code to div
 			$('#environment').append(enemyDiv);
 		}
 
